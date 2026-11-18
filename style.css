@@ -1,0 +1,461 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: radial-gradient(circle, #6b1010, #1b0000);
+
+    font-family: Georgia, serif;
+    overflow-x: hidden;
+    padding: 30px 15px;
+}
+
+/* Main Container */
+
+.container {
+    width: 100%;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.heading {
+    color: #ffe4c4;
+    font-family: cursive;
+    font-size: 35px;
+    margin-bottom: 45px;
+    text-align: center;
+
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px pink;
+    }
+
+    to {
+        text-shadow: 0 0 20px red,
+                     0 0 30px pink;
+    }
+}
+
+/* Envelope */
+
+.envelope {
+    width: 320px;
+    height: 210px;
+    position: relative;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.envelope-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #a64b27;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.envelope-front {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+
+    background: #b65c32;
+
+    clip-path: polygon(
+        0 0, 50% 55%, 100% 0,
+        100% 100%, 0 100%
+    );
+
+    z-index: 4;
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 110px;
+
+    background: #d18a50;
+
+    clip-path: polygon(
+        0 0, 100% 0, 50% 100%
+    );
+
+    transform-origin: top;
+    transition: transform 1s ease;
+    z-index: 5;
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.envelope.open .envelope-front {
+    z-index: 2;
+}
+
+/* Letter */
+
+.letter {
+    position: absolute;
+
+    width: 290px;
+    height: 310px;
+
+    left: 15px;
+    bottom: 10px;
+
+    padding: 22px 20px;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            #f8d99b,
+            #d9a75d
+        );
+
+    color: #4b2110;
+    border: 3px solid #9b5b28;
+
+    box-shadow: 0 5px 20px #000;
+
+    z-index: 3;
+
+    opacity: 0;
+    visibility: hidden;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    transform: translateY(60px);
+
+    transition:
+        transform 1.3s ease,
+        opacity 1s ease,
+        visibility 1s ease;
+}
+
+.envelope.open .letter {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.letter h2 {
+    font-family: cursive;
+    font-size: 27px;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #702b13;
+}
+
+.letter p {
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: left;
+    font-style: italic;
+    overflow-wrap: break-word;
+}
+
+.signature {
+    font-family: cursive;
+    text-align: right;
+    margin-top: 15px;
+    color: #782c1d;
+    font-size: 17px;
+}
+
+/* Heart on Envelope */
+
+.heart {
+    position: absolute;
+    top: 85px;
+    left: 135px;
+    font-size: 40px;
+    z-index: 6;
+    transition: 0.5s;
+}
+
+.envelope.open .heart {
+    opacity: 0;
+}
+
+/* Button */
+
+button {
+    margin-top: 35px;
+    padding: 13px 28px;
+
+    background: #e9b47a;
+    color: #5b170e;
+
+    border: 2px solid #f8d9a9;
+    border-radius: 30px;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+button:hover {
+    background: #fff0d5;
+    transform: scale(1.08);
+    box-shadow: 0 0 20px pink;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+/* Bottom Text */
+
+.bottom-text {
+    color: #ffd5d5;
+    margin-top: 25px;
+    font-family: cursive;
+    text-align: center;
+}
+
+/* Floating Hearts */
+
+
+
+/* Center Heart */
+
+.heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 45px;
+    z-index: 7;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 0.5s ease;
+}
+
+.envelope.open .heart {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.hearts span {
+    position: fixed;
+    bottom: -50px;
+
+    font-size: 25px;
+
+    animation: float 8s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hearts span:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.hearts span:nth-child(2) {
+    left: 25%;
+    animation-delay: 2s;
+}
+
+.hearts span:nth-child(3) {
+    left: 45%;
+    animation-delay: 4s;
+}
+
+.hearts span:nth-child(4) {
+    left: 65%;
+    animation-delay: 1s;
+}
+
+.hearts span:nth-child(5) {
+    left: 80%;
+    animation-delay: 3s;
+}
+
+.hearts span:nth-child(6) {
+    left: 90%;
+    animation-delay: 5s;
+}
+
+.hearts span:nth-child(7) {
+    left: 55%;
+    animation-delay: 6s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Laptop Screens */
+
+@media screen and (min-width: 769px) {
+    .container {
+        transform: scale(1);
+    }
+
+    .envelope {
+        width: 360px;
+        height: 220px;
+    }
+
+    .letter {
+        width: 330px;
+        height: 320px;
+        left: 15px;
+    }
+
+    .heading {
+        font-size: 38px;
+    }
+}
+
+/* Tablets */
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 25px 12px;
+    }
+
+    .heading {
+        font-size: 30px;
+        margin-bottom: 40px;
+    }
+
+    .envelope {
+        width: 300px;
+        height: 200px;
+    }
+
+    .letter {
+        width: 270px;
+        height: 300px;
+        left: 15px;
+        padding: 20px 16px;
+    }
+}
+
+/* Mobile Phones */
+
+@media screen and (max-width: 480px) {
+    body {
+        min-height: 100svh;
+        padding: 25px 10px;
+    }
+
+    .container {
+        min-height: 400px;
+    }
+
+    .heading {
+        font-size: 26px;
+        margin-bottom: 35px;
+    }
+
+    .envelope {
+        width: min(280px, calc(100vw - 40px));
+        height: 180px;
+    }
+
+    .letter {
+        width: calc(100% - 30px);
+        height: 280px;
+        left: 15px;
+        bottom: 10px;
+        padding: 18px 14px;
+    }
+
+    .letter h2 {
+        font-size: 23px;
+    }
+
+    .letter p {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .signature {
+        font-size: 15px;
+    }
+
+    .heart {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 70px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 11px 23px;
+    }
+
+    .bottom-text {
+        font-size: 13px;
+    }
+
+    .hearts span {
+        font-size: 20px;
+    }
+}
+
+/* Small Mobile Phones */
+
+@media screen and (max-width: 350px) {
+    .heading {
+        font-size: 22px;
+    }
+
+    .envelope {
+        width: 260px;
+    }
+
+    .letter {
+        height: 260px;
+    }
+
+    .letter p {
+        font-size: 12px;
+    }
+}
+
